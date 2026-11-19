@@ -1,7 +1,7 @@
 use chrono::{NaiveDate, NaiveTime};
 
-use calendar_tasks::items::{Anniversary, Item, Task};
-use calendar_tasks::planning::Planning;
+use calendarust_lib::items::{Anniversary, Item, Task};
+use calendarust_lib::planning::Planning;
 
 #[test]
 fn task_only_appears_on_its_scheduled_date() {

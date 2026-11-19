@@ -1,6 +1,6 @@
 use chrono::{NaiveDate, NaiveTime};
 
-use calendar_tasks::{
+use calendarust_lib::{
     items::{Anniversary, Item, Task},
     planning::Planning,
 };
