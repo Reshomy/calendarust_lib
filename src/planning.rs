@@ -1,8 +1,9 @@
-use crate::items::Item;
+use crate::items::{Item, ItemKind};
 
 #[derive(Default)]
 pub struct Planning {
     items: Vec<Item>,
+    next_id: u64,
 }
 
 impl Planning {
@@ -10,10 +11,16 @@ impl Planning {
         Self::default()
     }
 
-    pub fn add_item(&mut self, item: Item) {
-        self.items.push(item);
-    }
+    pub fn add_item(&mut self, kind: ItemKind) -> u64 {
+        let id = self.next_id;
+        self.next_id += 1;
 
+        let item = Item::new(id, kind);
+
+        self.items.push(item);
+
+        id
+    }
     pub fn items(&self) -> &[Item] {
         &self.items
     }
