@@ -1,7 +1,7 @@
-pub mod anniversary;
-pub mod item;
-pub mod task;
+mod anniversary;
+mod item;
+mod task;
 
-pub use anniversary::Anniversary;
-//pub use item::Item;
-//pub use task::Task;
+pub use anniversary::{Anniversary, AnniversaryError};
+pub use item::Item;
+pub use task::{Task, TaskError};
