@@ -24,22 +24,24 @@ The goal is to provide a flexible and extensible calendar and planning engine wh
 
 ### Implemented
 
-| Feature       | Description                                                   |
-| ------------- | ------------------------------------------------------------- |
-| Anniversaries | Store a name, month, and day                                  |
-| Recurrence    | Automatically recognize recurring anniversaries each year     |
-| Leap years    | Support February 29 anniversaries                             |
-| Tasks         | Store titles, descriptions, dates, start times, and end times |
-| Validation    | Validate task time ranges                                     |
-| Planning      | Manage anniversaries and tasks in a single collection         |
-| Retrieval     | Retrieve all calendar items                                   |
-| Date queries  | Retrieve items occurring on a specific date                   |
-| Removal       | Remove items by their current position                        |
+| Feature | Description |
+| --- | --- |
+| Anniversaries | Store a name, month, and day |
+| Recurrence | Automatically recognize recurring anniversaries each year |
+| Leap years | Support February 29 anniversaries |
+| Tasks | Store titles, descriptions, dates, start times, and end times |
+| Validation | Validate task time ranges |
+| Planning | Manage anniversaries and tasks in a single collection |
+| Unique IDs | Automatically assign a unique ID to each item |
+| Item types | Distinguish between anniversaries and tasks using `ItemKind` |
+| Retrieval | Retrieve all calendar items |
+| Date queries | Retrieve items occurring on a specific date |
+| Removal | Remove items by their current position |
 
 ### Planned features
 
-- [ ] Unique IDs for calendar items
-- [ ] Find, edit, and remove items by ID
+- [ ] Find items by ID
+- [ ] Edit and remove items by ID
 - [ ] Sorting and improved error handling
 - [ ] Date-range queries and calendar views
 - [ ] Events and recurrence management
@@ -77,37 +79,43 @@ calendarust_lib = { path = "../calendarust_lib" }
 The following example demonstrates how to create a planning instance, add an anniversary and a task, and retrieve calendar items for a specific date.
 
 ```rust
+use chrono::{NaiveDate, NaiveTime};
+
 use calendarust_lib::{
-    items::{Anniversary, Item, Task},
+    items::{Anniversary, ItemKind, Task},
     planning::Planning,
 };
-
-use chrono::{NaiveDate, NaiveTime};
 
 fn main() {
     let mut planning = Planning::new();
 
     // Create an anniversary
     let birthday = Anniversary::new(
-        "Birthday".to_string(),
+        String::from("Birthday"),
         5,
         15,
     )
     .expect("Invalid anniversary");
 
-    planning.add_item(Item::Anniversary(birthday));
+    // Add the anniversary and retrieve its automatically assigned ID
+    let birthday_id = planning.add_item(ItemKind::Anniversary(birthday));
+
+    println!("Birthday ID: {}", birthday_id);
 
     // Create a task
     let task = Task::new(
-        "Finish project".to_string(),
-        "Complete the Rust project".to_string(),
+        String::from("Finish project"),
+        String::from("Complete the Rust project"),
         NaiveDate::from_ymd_opt(2026, 11, 25).unwrap(),
         NaiveTime::from_hms_opt(9, 0, 0).unwrap(),
         NaiveTime::from_hms_opt(10, 30, 0).unwrap(),
     )
     .expect("Invalid task");
 
-    planning.add_item(Item::Task(task));
+    // Add the task and retrieve its automatically assigned ID
+    let task_id = planning.add_item(ItemKind::Task(task));
+
+    println!("Task ID: {}", task_id);
 
     // Retrieve items for a specific date
     let date = NaiveDate::from_ymd_opt(2026, 11, 25).unwrap();
@@ -220,6 +228,18 @@ If you would like to contribute:
 For significant changes, consider opening an issue first to discuss the proposed functionality.
 
 Unless explicitly stated otherwise, contributions intentionally submitted for inclusion in this project are licensed under the same dual-license terms as the project, as described in the Apache License 2.0 and MIT License.
+
+---
+
+## Contributors
+
+Thanks to everyone who has contributed to `calendarust_lib`!
+
+<a href="https://github.com/Reshomy/calendarust_lib/graphs/contributors">
+  <img src="https://contrib.rocks/image?repo=Reshomy/calendarust_lib" />
+</a>
+
+Contributions, suggestions, and improvements are always welcome!
 
 ---
 
