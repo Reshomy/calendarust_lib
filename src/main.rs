@@ -174,11 +174,75 @@ fn main() {
     }
 
     // --------------------------------------------------
-    // 8. Final summary
+    // 8. Demonstrate item removal
     // --------------------------------------------------
 
-    println!("\nSUMMARY");
+    println!("\nITEM REMOVAL");
+    println!("------------");
+
+    // Display the items before removal
+    println!("Items before removal:");
+
+    for (index, item) in planning.items().iter().enumerate() {
+        match item {
+            Item::Anniversary(anniversary) => {
+                println!("{}. {}", index + 1, anniversary.name());
+            }
+
+            Item::Task(task) => {
+                println!("{}. {}", index + 1, task.title());
+            }
+        }
+    }
+
+    // Choose an item using human-friendly numbering
+    let displayed_number = 2;
+
+    println!("\nRemoving item number {}...", displayed_number);
+
+    if displayed_number > 0 && displayed_number <= planning.items().len() {
+        let index = displayed_number - 1;
+
+        match planning.remove_item(index) {
+            Some(item) => match item {
+                Item::Anniversary(anniversary) => {
+                    println!("Removed anniversary: {}", anniversary.name());
+                }
+
+                Item::Task(task) => {
+                    println!("Removed task: {}", task.title());
+                }
+            },
+
+            None => {
+                println!("Item not found.");
+            }
+        }
+    } else {
+        println!("Invalid item number.");
+    }
+
+    // Display the items after removal
+    println!("\nItems after removal:");
+
+    for (index, item) in planning.items().iter().enumerate() {
+        match item {
+            Item::Anniversary(anniversary) => {
+                println!("{}. {}", index + 1, anniversary.name());
+            }
+
+            Item::Task(task) => {
+                println!("{}. {}", index + 1, task.title());
+            }
+        }
+    }
+
+    // --------------------------------------------------
+    // 8. final summary
+    // --------------------------------------------------
+
+    println!("\nsummary");
     println!("-------");
-    println!("Total stored items: {}", planning.items().len());
-    println!("Showcase completed.");
+    println!("total stored items: {}", planning.items().len());
+    println!("showcase completed.");
 }

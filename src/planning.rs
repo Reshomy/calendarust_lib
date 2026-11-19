@@ -24,4 +24,12 @@ impl Planning {
             .filter(|item| item.occurs_on(date))
             .collect()
     }
+
+    pub fn remove_item(&mut self, index: usize) -> Option<Item> {
+        if index >= self.items.len() {
+            return None;
+        }
+
+        Some(self.items.remove(index))
+    }
 }
